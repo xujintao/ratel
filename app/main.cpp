@@ -1,3 +1,5 @@
+#include "echo-cpp.h"
+
 #include "config.h"
 
 #include <sys/types.h>
@@ -280,6 +282,7 @@ static int fcgi_spawn_connection(char *appPath, char **appArgv, int fcgi_fd, int
 
 					return child;	//把业务逻辑提到main中, xujintao,2017.12.5
 
+#if 0
 					/* we don't need the client socket */
 					for (i = 3; i < max_fd; i++) {
 						if (i != FCGI_LISTENSOCK_FILENO) close(i);
@@ -306,6 +309,7 @@ static int fcgi_spawn_connection(char *appPath, char **appArgv, int fcgi_fd, int
 					exit(errno);
 
 					break;
+#endif
 		}
 		case -1:
 			/* error */
@@ -682,6 +686,6 @@ int main(int argc, char **argv) {
 	if (0 == fcgi_spawn_connection(fcgi_app, fcgi_app_argv, fcgi_fd, fork_count, child_count, pid_fd, nofork))
 	{
 		//子进程的fcgi逻辑
-		fprintf(stdout, "spawn-fcgi: run\n");
+		echo();
 	}
 }
