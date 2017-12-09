@@ -33,7 +33,7 @@
 #include <iostream>
 
 #include "fcgiapp.h"
-
+#include <stdio.h>
 #ifndef DLLAPI
 #ifdef _WIN32
 #define DLLAPI __declspec(dllimport)
