@@ -1,5 +1,5 @@
-#include "echo-cpp.h"
-
+ï»¿#include "echo-cpp.h"
+#include "echo.h"
 #include "config.h"
 
 #include <sys/types.h>
@@ -280,7 +280,7 @@ static int fcgi_spawn_connection(char *appPath, char **appArgv, int fcgi_fd, int
 						}
 					}
 
-					return child;	//°ÑÒµÎñÂß¼­Ìáµ½mainÖĞ, xujintao,2017.12.5
+					return child;	//æŠŠä¸šåŠ¡é€»è¾‘æåˆ°mainä¸­, xujintao,2017.12.5
 
 #if 0
 					/* we don't need the client socket */
@@ -549,7 +549,7 @@ int main(int argc, char **argv) {
 		fcgi_app_argv = &argv[optind];
 	}
 
-	//²»ÔÙ°Ñfcgi³ÌĞòÂ·¾¶´ø¸øspawn-fcgiÁË, xujintao,2017.12.5
+	//ä¸å†æŠŠfcgiç¨‹åºè·¯å¾„å¸¦ç»™spawn-fcgiäº†, xujintao,2017.12.5
 	//if (NULL == fcgi_app && NULL == fcgi_app_argv) {
 	//	fprintf(stderr, "spawn-fcgi: no FastCGI application given\n");
 	//	return -1;
@@ -682,10 +682,19 @@ int main(int argc, char **argv) {
 		return -1;
 	}
 
-	//return fcgi_spawn_connection(fcgi_app, fcgi_app_argv, fcgi_fd, fork_count, child_count, pid_fd, nofork);//°ÑÒµÎñÂß¼­Ìáµ½mainÖĞ, xujintao,2017.12.5
+	//return fcgi_spawn_connection(fcgi_app, fcgi_app_argv, fcgi_fd, fork_count, child_count, pid_fd, nofork);//æŠŠä¸šåŠ¡é€»è¾‘æåˆ°mainä¸­, xujintao,2017.12.5
 	if (0 == fcgi_spawn_connection(fcgi_app, fcgi_app_argv, fcgi_fd, fork_count, child_count, pid_fd, nofork))
 	{
-		//×Ó½ø³ÌµÄfcgiÂß¼­
-		echo();
+		//fcgiç½‘ç»œæ¡†æ¶
+		//echo();
+
+		//fastcgippæ¡†æ¶
+		Fastcgipp::Manager<Echo> manager;
+		manager.setupSignals();
+		manager.listen();
+		manager.start();
+		manager.join();
+
+		return 0;
 	}
 }
