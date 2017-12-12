@@ -25,4 +25,4 @@ cd ratel
 
 ## License
 
-[MIT](https://github.com/electron/electron/blob/master/LICENSE)
+[MIT](https://github.com/xujintao/ratel/blob/master/LICENSE)
