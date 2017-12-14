@@ -1,4 +1,4 @@
-[![Jenkins Build Status](https://mac-ci.electronjs.org/buildStatus/icon?job=Electron%20org/electron/master)](https://mac-ci.electronjs.org/blue/organizations/jenkins/Electron%20org%2Felectron/activity?branch=master)
+[![Build Status](https://travis-ci.org/xujintao/ratel.svg?branch=master)](https://travis-ci.org/xujintao/ratel)
 
 Ratel is a api server solution using c/c++. It is based on spawn-fcgi, fastcgi, fastcgi++ and many other libraries which can achieve through github.
 
