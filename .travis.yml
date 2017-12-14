@@ -20,10 +20,10 @@ matrix:
 
 before_install:
     - eval "${MATRIX_EVAL}"
-    - pwd
-    
+
 
 # The build machines are centos7.3 x86-64
 
 script:
+    - pwd
     - ./build.sh
