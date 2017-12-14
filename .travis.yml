@@ -20,15 +20,10 @@ matrix:
 
 before_install:
     - eval "${MATRIX_EVAL}"
+    - pwd
     
 
 # The build machines are centos7.3 x86-64
 
 script:
-    make -C ./libfcgi clean
-    make -C ./libfastcgipp clean
-    make -C ./app clean
-
-    make -C ./libfcgi 
-    make -C ./libfastcgipp
-    make -C ./app
+    - ./build.sh
