@@ -1,0 +1,34 @@
+# travis-ci.org - continuous testing environment - http://docs.travis-ci.com/
+sudo: false
+language: cpp
+compiler:
+  - gcc
+
+matrix:
+  include:
+    # works on Precise and Trusty
+    - os: linux
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - gcc-7
+            - g++-7
+      env:
+        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+before_install:
+    - eval "${MATRIX_EVAL}"
+    
+
+# The build machines are centos7.3 x86-64
+
+script:
+    make -C ./libfcgi clean
+    make -C ./libfastcgipp clean
+    make -C ./app clean
+
+    make -C ./libfcgi 
+    make -C ./libfastcgipp
+    make -C ./app
