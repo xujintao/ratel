@@ -23,7 +23,7 @@ before_script:
     - echo $CC
 
 # link gcc(g++) to gcc-7(g++-7)
-    - ll /usr/bin | grep gcc
+    - ls -l /usr/bin | grep gcc
     - gcc --version
     - sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc -f
     - sudo ln -s /usr/bin/g++-7 /usr/bin/g++ -f
