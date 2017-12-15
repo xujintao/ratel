@@ -1,5 +1,4 @@
 # travis-ci.org - continuous testing environment - http://docs.travis-ci.com/
-sudo: false
 language: cpp
 compiler:
   - gcc
@@ -18,10 +17,15 @@ matrix:
       env:
         - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 
-before_install:
+before_script:
     - eval "${MATRIX_EVAL}"
+    - echo $CC
     - pwd
+    - ls -l /usr/bin/gcc
     - gcc --version
+#    - sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc -f
+#    - sudo ln -s /usr/bin/g++-7 /usr/bin/g++ -f
+#    - gcc --version
 
 # The build machines are centos7.3 x86-64
 
