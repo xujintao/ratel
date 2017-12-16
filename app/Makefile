@@ -36,7 +36,7 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := main.cpp echo-cpp.cpp
+SOURCEFILES := BaseHandler.cpp main.cpp echo-cpp.cpp OpenAPIHandler.cpp RequestHandler.cpp URL2ID.cpp UserAuthHandler.cpp
 EXTERNAL_LIBS := ../libfcgi/$(BINARYDIR)/libfcgi.so ../libfastcgipp/$(BINARYDIR)/libfastcgipp.so
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 

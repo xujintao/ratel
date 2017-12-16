@@ -1,7 +1,9 @@
-﻿#include "echo-cpp.h"
-#include "echo.h"
-#include "config.h"
+﻿#include "echo-cpp.h"	//use fastcgi demo
+#include "echo.h"		//use fastcgi++ demo
+#include "RequestHandler.h"	//app
+#include "URL2ID.h"			//url2id
 
+#include "config.h"
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/stat.h>
@@ -685,11 +687,14 @@ int main(int argc, char **argv) {
 	//return fcgi_spawn_connection(fcgi_app, fcgi_app_argv, fcgi_fd, fork_count, child_count, pid_fd, nofork);//把业务逻辑提到main中, xujintao,2017.12.5
 	if (0 == fcgi_spawn_connection(fcgi_app, fcgi_app_argv, fcgi_fd, fork_count, child_count, pid_fd, nofork))
 	{
+		URL2ID::Init();
+
 		//fcgi网络框架
 		//echo();
 
 		//fastcgipp框架
-		Fastcgipp::Manager<Echo> manager;
+		//Fastcgipp::Manager<Echo> manager;
+		Fastcgipp::Manager<RequestHandler> manager;
 		manager.setupSignals();
 		manager.listen();
 		manager.start();
