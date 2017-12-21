@@ -615,9 +615,10 @@ void Fastcgipp::SocketGroup::createSocket(const socket_t listener)
             reinterpret_cast<sockaddr*>(&addr),
             &addrlen);
     if(socket<0)
-        FAIL_LOG("Unable to accept() with fd " \
-                << listener << ": " \
-                << std::strerror(errno))
+        //FAIL_LOG("Unable to accept() with fd " \
+        //        << listener << ": " \
+        //        << std::strerror(errno))
+		close(socket);//here CentOS7.3(linux 3.10) still occurs "thundering herd" problem, so it should be close, not exit(1)
     if(fcntl(
             socket,
             F_SETFL,
