@@ -36,8 +36,8 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := BaseHandler.cpp main.cpp echo-cpp.cpp OpenAPIHandler.cpp RequestHandler.cpp URL2ID.cpp UserAuthHandler.cpp
-EXTERNAL_LIBS := ../libfcgi/$(BINARYDIR)/libfcgi.so ../libfastcgipp/$(BINARYDIR)/libfastcgipp.so
+SOURCEFILES := BaseHandler.cpp echo-cpp.cpp main.cpp OpenAPIHandler.cpp RequestHandler.cpp URL2ID.cpp UserAuthHandler.cpp
+EXTERNAL_LIBS := ../libfcgi/$(BINARYDIR)/libfcgi.so ../libfastcgipp/$(BINARYDIR)/libfastcgipp.so ../libcommon/$(BINARYDIR)/libcommon.so
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
 CFLAGS += $(COMMONFLAGS)
@@ -185,4 +185,7 @@ $(BINARYDIR)/libfcgi.so : ../libfcgi/$(BINARYDIR)/libfcgi.so
 
 $(BINARYDIR)/libfastcgipp.so : ../libfastcgipp/$(BINARYDIR)/libfastcgipp.so
 	$(CP) ../libfastcgipp/$(BINARYDIR)/libfastcgipp.so $(BINARYDIR)/libfastcgipp.so
+
+$(BINARYDIR)/libcommon.so : ../libcommon/$(BINARYDIR)/libcommon.so
+	$(CP) ../libcommon/$(BINARYDIR)/libcommon.so $(BINARYDIR)/libcommon.so
 

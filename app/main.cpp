@@ -2,6 +2,7 @@
 #include "echo.h"		//use fastcgi++ demo
 #include "RequestHandler.h"	//app
 #include "URL2ID.h"			//url2id
+#include "log.h"
 
 #include "config.h"
 #include <sys/types.h>
@@ -688,7 +689,9 @@ int main(int argc, char **argv) {
 	if (0 == fcgi_spawn_connection(fcgi_app, fcgi_app_argv, fcgi_fd, fork_count, child_count, pid_fd, nofork))
 	{
 		URL2ID::Init();
-
+		::commom::InitLog();
+		LOG_INFO << "init";
+		//BOOST_LOG_SEV(my_logger, _info) << "init";
 		//fcgi网络框架
 		//echo();
 

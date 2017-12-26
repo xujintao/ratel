@@ -1,4 +1,5 @@
 #include "log.h"
+using namespace commom;
 
 void InitLog() {
 	typedef sinks::synchronous_sink<sinks::text_file_backend> TextSink;
@@ -38,3 +39,4 @@ void InitLog() {
 	logging::add_common_attributes();
 	logging::core::get()->add_global_attribute("ThreadID", attrs::current_thread_id());
 }
+

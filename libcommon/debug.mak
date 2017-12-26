@@ -12,7 +12,7 @@ AR := ar
 OBJCOPY := objcopy
 
 #Additional flags
-PREPROCESSOR_MACROS := DEBUG=1 BOOST_LOG_DYN_LINK
+PREPROCESSOR_MACROS := BOOST_LOG_DYN_LINK
 INCLUDE_DIRS := 
 LIBRARY_DIRS := 
 LIBRARY_NAMES := pthread boost_log boost_system boost_thread boost_filesystem
