@@ -689,9 +689,10 @@ int main(int argc, char **argv) {
 	if (0 == fcgi_spawn_connection(fcgi_app, fcgi_app_argv, fcgi_fd, fork_count, child_count, pid_fd, nofork))
 	{
 		URL2ID::Init();
-		::commom::InitLog();
-		LOG_INFO << "init";
-		//BOOST_LOG_SEV(my_logger, _info) << "init";
+		common::InitLog();
+		//LOG_INFO << "init";
+		Log(info, "init,%d,%s", 10, "hello1");
+        Log(info, "init,%d,%s", 10, "hello2");
 		//fcgi网络框架
 		//echo();
 
