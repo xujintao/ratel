@@ -15,7 +15,7 @@ A non-blocking fastcgi based network library with c++14, which means our compile
 One receiver-thread(as producer) accept request asynchronously, and push all request to a container 
 which other multi-thread(act as consumer) pull from and handle.
 
-* [Ratel.log]
+* [Ratel.log]  
 features:
 1. The log module in ratel is based on Boost.log.
 2. Instead of verboss "<<", it use printf-style syntax, which means we can log like this:
