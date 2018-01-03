@@ -4,10 +4,10 @@
 class OpenAPIHandler : public virtual BaseHandler
 {
 public:
-	OpenAPIHandler();
-	virtual ~OpenAPIHandler();
+    OpenAPIHandler();
+    virtual ~OpenAPIHandler();
 
 protected:
-	void HandleOpenAPI(const int id);
+    void HandleOpenAPI(const int id);
 };
 

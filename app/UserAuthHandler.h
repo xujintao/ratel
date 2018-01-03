@@ -4,10 +4,10 @@
 class UserAuthHandler : public virtual BaseHandler
 {
 public:
-	UserAuthHandler();
-	virtual ~UserAuthHandler();
+    UserAuthHandler();
+    virtual ~UserAuthHandler();
 
 protected:
-	void HandleUserAuth(const int id);
+    void HandleUserAuth(const int id);
 };
 

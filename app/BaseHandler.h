@@ -7,10 +7,10 @@
 class BaseHandler : public Fastcgipp::Request<wchar_t>
 {
 public:
-	BaseHandler();
-	virtual ~BaseHandler();
-	void ResponseError();
-	void ResponseOpenAPI();
-	void ResponseUserAuth();
+    BaseHandler();
+    virtual ~BaseHandler();
+    void LogRequest();
+    void ResponseError();
+    void ResponseOpenAPI();
+    void ResponseUserAuth();
 };
-
