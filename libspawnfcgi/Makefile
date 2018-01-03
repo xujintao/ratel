@@ -5,9 +5,9 @@
 
 #VisualGDB: AutoSourceFiles		#<--- remove this line to disable auto-updating of SOURCEFILES and EXTERNAL_LIBS
 
-TARGETNAME := app
+TARGETNAME := libspawnfcgi.so
 #TARGETTYPE can be APP, STATIC or SHARED
-TARGETTYPE := APP
+TARGETTYPE := SHARED
 
 to_lowercase = $(subst A,a,$(subst B,b,$(subst C,c,$(subst D,d,$(subst E,e,$(subst F,f,$(subst G,g,$(subst H,h,$(subst I,i,$(subst J,j,$(subst K,k,$(subst L,l,$(subst M,m,$(subst N,n,$(subst O,o,$(subst P,p,$(subst Q,q,$(subst R,r,$(subst S,s,$(subst T,t,$(subst U,u,$(subst V,v,$(subst W,w,$(subst X,x,$(subst Y,y,$(subst Z,z,$1))))))))))))))))))))))))))
 
@@ -36,8 +36,8 @@ error:
 	$(error Invalid configuration, please check your inputs)
 endif
 
-SOURCEFILES := BaseHandler.cpp main.cpp echo-cpp.cpp OpenAPIHandler.cpp RequestHandler.cpp URL2ID.cpp UserAuthHandler.cpp
-EXTERNAL_LIBS := ../libcommon/$(BINARYDIR)/libcommon.so ../libfcgi/$(BINARYDIR)/libfcgi.so ../libfastcgipp/$(BINARYDIR)/libfastcgipp.so ../libspawnfcgi/$(BINARYDIR)/libspawnfcgi.so
+SOURCEFILES := spawnfcgi.cpp
+EXTERNAL_LIBS := 
 EXTERNAL_LIBS_COPIED := $(foreach lib, $(EXTERNAL_LIBS),$(BINARYDIR)/$(notdir $(lib)))
 
 CFLAGS += $(COMMONFLAGS)
@@ -180,15 +180,3 @@ $(BINARYDIR)/%.o : %.cxx $(all_make_files) |$(BINARYDIR)
 	$(CC) $(CFLAGS) $(CXXFLAGS) -c $< -o $@ -MD -MF $(@:.o=.dep)
 
 #VisualGDB: GeneratedRules				#<--- All lines below are auto-generated. Remove this line to suppress auto-generation of file rules.
-$(BINARYDIR)/libcommon.so : ../libcommon/$(BINARYDIR)/libcommon.so
-	$(CP) ../libcommon/$(BINARYDIR)/libcommon.so $(BINARYDIR)/libcommon.so
-
-$(BINARYDIR)/libfcgi.so : ../libfcgi/$(BINARYDIR)/libfcgi.so
-	$(CP) ../libfcgi/$(BINARYDIR)/libfcgi.so $(BINARYDIR)/libfcgi.so
-
-$(BINARYDIR)/libfastcgipp.so : ../libfastcgipp/$(BINARYDIR)/libfastcgipp.so
-	$(CP) ../libfastcgipp/$(BINARYDIR)/libfastcgipp.so $(BINARYDIR)/libfastcgipp.so
-
-$(BINARYDIR)/libspawnfcgi.so : ../libspawnfcgi/$(BINARYDIR)/libspawnfcgi.so
-	$(CP) ../libspawnfcgi/$(BINARYDIR)/libspawnfcgi.so $(BINARYDIR)/libspawnfcgi.so
-
