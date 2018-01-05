@@ -35,7 +35,8 @@
 
 #include "fastcgi++/log.hpp"
 #include "fastcgi++/http.hpp"
-
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 
 void Fastcgipp::Http::vecToString(
         const char* start,
@@ -409,6 +410,7 @@ bool Fastcgipp::Http::Environment<charT>::parsePostBuffer()
 {
     static const std::string multipartStr("multipart/form-data");
     static const std::string urlEncodedStr("application/x-www-form-urlencoded");
+    static const std::string jsonStr("application/json");
 
     if(!m_postBuffer.size())
         return true;
@@ -431,6 +433,15 @@ bool Fastcgipp::Http::Environment<charT>::parsePostBuffer()
                 contentType.cend()))
     {
         parsePostsUrlEncoded();
+        parsed = true;
+    }
+    else if (std::equal(
+                jsonStr.cbegin(),
+                jsonStr.cend(),
+                contentType.cbegin(),
+                contentType.cend()))
+    {
+        parsePostsJson();
         parsed = true;
     }
 
@@ -621,6 +632,17 @@ void Fastcgipp::Http::Environment<charT>::parsePostsUrlEncoded()
             m_postBuffer.data(),
             m_postBuffer.data()+m_postBuffer.size(),
             posts);
+}
+
+template<class charT>
+void Fastcgipp::Http::Environment<charT>::parsePostsJson()
+{
+    const char* const start = m_postBuffer.data();
+    const char* const end = m_postBuffer.data() + m_postBuffer.size();
+    std::string str_json;
+    vecToString(start, end, str_json);//vector<char> to string/wstring
+    std::stringstream ss_json(str_json);
+    boost::property_tree::read_json(ss_json, jsons);
 }
 
 template class Fastcgipp::Http::Environment<char>;

@@ -44,6 +44,7 @@
 #include <atomic>
 
 #include <fastcgi++/protocol.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 //! Topmost namespace for the fastcgi++ library
 namespace Fastcgipp
@@ -333,6 +334,9 @@ namespace Fastcgipp
                 std::basic_string<charT>,
                 File<charT>> files;
 
+            //! Json POST data
+            boost::property_tree::ptree jsons;
+
             //! Parses FastCGI parameter data into the data structure
             /*!
              * This function will take the body of a FastCGI parameter record
@@ -397,6 +401,9 @@ namespace Fastcgipp
 
             //! Parses "application/x-www-form-urlencoded" post data
             inline void parsePostsUrlEncoded();
+
+            //! Parses "application/json" post data
+            inline void parsePostsJson();
 
             //! Raw string of characters representing the post boundary
             std::vector<char> boundary;

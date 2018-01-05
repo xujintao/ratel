@@ -205,7 +205,7 @@ template<class charT> void Fastcgipp::Request<charT>::configure(
         const std::function<void(const Socket&, Block&&, bool)> send,
         const std::function<void(Message)> callback)
 {
-    using namespace std::placeholders;
+    //using namespace std::placeholders;
 
     m_kill=kill;
     m_id=id;
@@ -216,11 +216,11 @@ template<class charT> void Fastcgipp::Request<charT>::configure(
     m_outStreamBuffer.configure(
             id,
             Protocol::RecordType::OUT,
-            std::bind(send, _1, _2, false));
+            std::bind(send, std::placeholders::_1, std::placeholders::_2, false));
     m_errStreamBuffer.configure(
             id,
             Protocol::RecordType::ERR,
-            std::bind(send, _1, _2, false));
+            std::bind(send, std::placeholders::_1, std::placeholders::_2, false));
 }
 
 template<class charT> unsigned Fastcgipp::Request<charT>::pickLocale(

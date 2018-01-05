@@ -297,16 +297,15 @@ namespace Fastcgipp
                 const Protocol::Role& role,
                 bool kill)
         {
-            using namespace std::placeholders;
+            //using namespace std::placeholders;
 
             std::unique_ptr<Request_base> request(new RequestT);
-			//static_cast<RequestT&>(*request).configure(
-			dynamic_cast<RequestT&>(*request).configure(
+            dynamic_cast<RequestT&>(*request).configure(
                     id,
                     role,
                     kill,
-                    std::bind(&Transceiver::send, &m_transceiver, _1, _2, _3),
-                    std::bind(&Manager_base::push, this, id, _1));
+                    std::bind(&Transceiver::send, &m_transceiver, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3),
+                    std::bind(&Manager_base::push, this, id, std::placeholders::_1));
             return request;
         }
 
