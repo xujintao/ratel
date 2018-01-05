@@ -1,4 +1,4 @@
-#include "URL2ID.h"
+﻿#include "URL2ID.h"
 
 #define STR(x) #x
 

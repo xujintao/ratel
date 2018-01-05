@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  A simple FastCGI application example in C++.
  *
  *  $Id: echo-cpp.cpp,v 1.10 2002/02/25 00:46:17 robs Exp $

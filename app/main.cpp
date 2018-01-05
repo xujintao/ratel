@@ -1,6 +1,6 @@
 ﻿#include "spawnfcgi.h"  //use spawn-fcgi
-#include "echo-cpp.h"   //use fastcgi demo
-#include "echo.h"       //use fastcgi++ demo
+//#include "echo-cpp.h"   //use fastcgi demo
+//#include "echo.h"       //use fastcgi++ demo
 #include "RequestHandler.h" //app
 #include "URL2ID.h"     //url2id
 #include "log.h"

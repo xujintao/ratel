@@ -1,4 +1,4 @@
-#include "UserAuthHandler.h"
+Ôªø#include "UserAuthHandler.h"
 #include "URL2ID.h"
 
 UserAuthHandler::UserAuthHandler()
@@ -10,17 +10,32 @@ UserAuthHandler::~UserAuthHandler()
 {
 }
 
+void UserAuthHandler::LoginByToken()
+{
+    ptree& params = environment().jsons;
+    //if (params.get)
+}
+
 void UserAuthHandler::HandleUserAuth(const int id)
 {
-    //—È÷§
+    //È™åËØÅ
 
-    //id¥¶¿Ì
-    switch (id)
+    //idÂ§ÑÁêÜ
+    switch (environment().requestMethod)
     {
-    case URL_ID::LoginByToken:
-        ResponseUserAuth();
+    case RequestMethod::POST:
+        switch (id)
+        {
+        case URL_ID::LoginByToken:
+            ResponseUserAuth();
+            break;
+        default:
+            ResponseError(3);
+            break;
+        }
         break;
     default:
+        ResponseError(3);
         break;
     }
 }

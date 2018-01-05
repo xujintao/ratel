@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "UserAuthHandler.h"
 #include "OpenAPIHandler.h"
@@ -9,6 +9,6 @@ class RequestHandler : public OpenAPIHandler
 public:
     RequestHandler();
     virtual ~RequestHandler();
-    bool response();//ÊµÏÖresponse½Ó¿Ú
+    bool response();//å®ç°responseæ¥å£
 };
 

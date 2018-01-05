@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "BaseHandler.h"
 
 class UserAuthHandler : public virtual BaseHandler
@@ -9,5 +9,8 @@ public:
 
 protected:
     void HandleUserAuth(const int id);
+
+private:
+    void LoginByToken();
 };
 

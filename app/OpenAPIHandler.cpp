@@ -1,4 +1,4 @@
-#include "OpenAPIHandler.h"
+ï»¿#include "OpenAPIHandler.h"
 #include "URL2ID.h"
 
 OpenAPIHandler::OpenAPIHandler()
@@ -12,9 +12,9 @@ OpenAPIHandler::~OpenAPIHandler()
 
 void OpenAPIHandler::HandleOpenAPI(const int id)
 {
-    //²»ÑéÖ¤
+    //ä¸éªŒè¯
 
-    //id´¦Àí
+    //idå¤„ç†
     switch (id)
     {
     case URL_ID::WeTest:

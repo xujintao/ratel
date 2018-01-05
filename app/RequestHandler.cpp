@@ -1,5 +1,5 @@
-#include "RequestHandler.h"
-#include <boost/algorithm/string.hpp>
+ï»¿#include "RequestHandler.h"
+#include <boost/algorithm/string.hpp>   //split
 #include "URL2ID.h"
 
 RequestHandler::RequestHandler()
@@ -13,12 +13,12 @@ RequestHandler::~RequestHandler()
 
 bool RequestHandler::response()
 {
-    //´¦ÀíÒµÎñ
+    //å¤„ç†ä¸šåŠ¡
     std::vector<std::string> path;
     boost::split(path, environment().scriptName, boost::is_any_of("/"));
     if (path.size() < 3)
     {
-        ResponseError();
+        ResponseError(3);
         return false;
     }
 
@@ -33,7 +33,7 @@ bool RequestHandler::response()
         HandleUserAuth(id);
         break;
     default:
-        ResponseError();
+        ResponseError(3);
         break;
     }
     return true;
