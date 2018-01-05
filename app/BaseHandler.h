@@ -6,7 +6,8 @@
 #include <sstream>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-using namespace boost::property_tree;
+using namespace boost::property_tree;   //export ptree
+using namespace Fastcgipp::Http;        //export RequestMethod::POST
 
 class BaseHandler : public Fastcgipp::Request<char>
 {

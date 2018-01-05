@@ -12,7 +12,7 @@ UserAuthHandler::~UserAuthHandler()
 
 void UserAuthHandler::LoginByToken()
 {
-    ptree& params = environment().jsons;
+    const ptree& params = environment().jsons;
     //if (params.get)
 }
 
