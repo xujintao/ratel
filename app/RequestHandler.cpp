@@ -1,6 +1,7 @@
 ﻿#include "RequestHandler.h"
 #include <boost/algorithm/string.hpp>   //split
 #include "URL2ID.h"
+#include "typeDef.h"
 
 RequestHandler::RequestHandler()
 {
@@ -13,12 +14,15 @@ RequestHandler::~RequestHandler()
 
 bool RequestHandler::response()
 {
+    //log
+    LogRequest();
+
     //处理业务
     std::vector<std::string> path;
     boost::split(path, environment().scriptName, boost::is_any_of("/"));
     if (path.size() < 3)
     {
-        ResponseError(3);
+        ResponseError(ERR_NO_API);
         return false;
     }
 
@@ -33,7 +37,7 @@ bool RequestHandler::response()
         HandleUserAuth(id);
         break;
     default:
-        ResponseError(3);
+        ResponseError(ERR_NO_API);
         break;
     }
     return true;

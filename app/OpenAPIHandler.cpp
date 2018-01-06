@@ -12,15 +12,23 @@ OpenAPIHandler::~OpenAPIHandler()
 
 void OpenAPIHandler::HandleOpenAPI(const int id)
 {
-    //不验证
-
-    //id处理
-    switch (id)
+    switch (environment().requestMethod)
     {
-    case URL_ID::WeTest:
-        ResponseOpenAPI();
+    case RequestMethod::POST:
+        //id处理
+        switch (id)
+        {
+        case URL_ID::WeTest:
+            //ResponseOpenAPI();
+            break;
+        default:
+            ResponseError(ERR_NO_API);
+            break;
+        }
         break;
+    case RequestMethod::GET:
     default:
+        ResponseError(ERR_NO_API);
         break;
     }
 }
