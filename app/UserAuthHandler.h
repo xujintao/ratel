@@ -8,7 +8,7 @@ public:
     virtual ~UserAuthHandler();
 
 protected:
-    void HandleUserAuth(const int id);
+    void HandleUserAuth(int id);
 
 private:
     void LoginByToken();

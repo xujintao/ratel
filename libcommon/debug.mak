@@ -13,7 +13,7 @@ OBJCOPY := objcopy
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG BOOST_LOG_DYN_LINK
-INCLUDE_DIRS := 
+INCLUDE_DIRS := ./
 LIBRARY_DIRS := 
 LIBRARY_NAMES := pthread boost_log boost_system boost_thread boost_filesystem
 ADDITIONAL_LINKER_INPUTS := 

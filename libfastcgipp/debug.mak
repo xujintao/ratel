@@ -13,7 +13,7 @@ OBJCOPY := objcopy
 
 #Additional flags
 PREPROCESSOR_MACROS := 
-INCLUDE_DIRS := ./
+INCLUDE_DIRS := ./ ../libcommon
 LIBRARY_DIRS := 
 LIBRARY_NAMES := pthread
 ADDITIONAL_LINKER_INPUTS := 

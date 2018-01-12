@@ -30,15 +30,16 @@ void BaseHandler::LogRequest()
     std::stringstream ssRemoteAddress;
     ssRemoteAddress << env.remoteAddress;
 
-    //postData
-    std::stringstream ssPostData;
-    write_json(ssPostData, env.jsons);
+    //序列化postData
+    Json::FastWriter fwriter;
+    fwriter.omitEndingLineFeed();//去除尾部换行符
+    std::string strData = fwriter.write(env.jsons);
 
     std::string strRequset;
     strRequset += "{\"ip\":\"" + ssRemoteAddress.str()
                 + "\",\"uri\":\"" + env.requestUri
                 + "\",\"host\":\"" + env.host
-                + "\",\"postData\":\"" + ssPostData.str()
+                + "\",\"postData\":\"" + strData
                 + "\",\"cookies\":\"" + Cookie2String()
                 + "\",\"userAgent\":\"" + env.userAgent
                 + "\",\"referer\":\"" + env.referer
@@ -57,25 +58,55 @@ int BaseHandler::Response(const char* contentType, const char* content, int errc
         << content;
 }
 
-void BaseHandler::ResponseJson(ptree& retJson)
+void BaseHandler::ResponseJson(Json::Value& retJson)
 {
-    retJson.put("time", time(NULL));
-    std::stringstream ss;
-    write_json(ss, retJson);
+    retJson["time"] = time(NULL);
 
-    Response("application/json", ss.str().c_str(), 0);
-    Log(debug, "ResponseJson %s %s", environment().requestUri.c_str(), ss.str().c_str());
+    //序列化
+    Json::FastWriter fwriter;
+    fwriter.omitEndingLineFeed();//去除尾部换行符
+    std::string retStr = fwriter.write(retJson);
+
+    Response("application/json", retStr.c_str(), ERR_OK);
+    Log(debug, "ResponseJson %s %s", environment().requestUri.c_str(), retStr.c_str());
 }
 
 void BaseHandler::ResponseError(int errcode, std::string paramMsg)
 {
     std::string strErrMsg = paramMsg.empty() ? AK47::GetErrMsg(errcode) : paramMsg;
-    ptree retJson;
-    retJson.put("time", time(NULL));
-    retJson.put("errcode", errcode);
-    retJson.put("errmsg", strErrMsg);
-    std::stringstream ss;
-    write_json(ss, retJson);
-    Response("application/json", ss.str().c_str(), errcode);
-    Log(errcode==0?debug:error, "ResponseJson %s %s", environment().requestUri.c_str(), ss.str().c_str());
+
+    //boostJson
+    //ptree retJson;
+    //retJson.put("time", time(NULL));
+    //retJson.put("errcode", errcode);
+    //retJson.put("errmsg", strErrMsg);
+    //std::stringstream ss;
+    //write_json(ss, retJson, false);
+
+    //rapidJson
+    //Document retJson;
+    //retJson.AddMember("time", time(NULL), retJson.GetAllocator());
+    //retJson.AddMember("errcode", errcode, retJson.GetAllocator());
+    ////retJson.AddMember("errmsg", strErrMsg.c_str(), retJson.GetAllocator());
+    //retJson.AddMember("errmsg", strErrMsg, retJson.GetAllocator());
+    ////Value s;
+    ////s.SetString(strErrMsg);
+    ////retJson.AddMember("errmsg", s, retJson.GetAllocator());
+    //StringBuffer buffer;
+    //Writer<StringBuffer> writer(buffer);
+    //retJson.Accept(writer);
+
+    //jsoncpp
+    Json::Value retJson;
+    retJson["time"] = time(NULL);
+    retJson["errcode"] = errcode;
+    retJson["errmsg"] = strErrMsg;
+
+    //序列化
+    Json::FastWriter fwriter;
+    fwriter.omitEndingLineFeed();//去除尾部换行符
+    std::string retStr = fwriter.write(retJson);
+
+    Response("application/json", retStr.c_str(), errcode);
+    Log(errcode == 0 ? debug : error, "ResponseError %s %s", environment().requestUri.c_str(), retStr.c_str());
 }

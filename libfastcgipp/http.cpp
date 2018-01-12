@@ -35,8 +35,6 @@
 
 #include "fastcgi++/log.hpp"
 #include "fastcgi++/http.hpp"
-#include <boost/property_tree/ptree.hpp>
-#include <boost/property_tree/json_parser.hpp>
 
 void Fastcgipp::Http::vecToString(
         const char* start,
@@ -441,8 +439,7 @@ bool Fastcgipp::Http::Environment<charT>::parsePostBuffer()
                 contentType.cbegin(),
                 contentType.cend()))
     {
-        parsePostsJson();
-        parsed = true;
+        parsed = parsePostsJson();
     }
 
     return parsed;
@@ -635,14 +632,16 @@ void Fastcgipp::Http::Environment<charT>::parsePostsUrlEncoded()
 }
 
 template<class charT>
-void Fastcgipp::Http::Environment<charT>::parsePostsJson()
+bool Fastcgipp::Http::Environment<charT>::parsePostsJson()
 {
     const char* const start = m_postBuffer.data();
     const char* const end = m_postBuffer.data() + m_postBuffer.size();
-    std::string str_json;
-    vecToString(start, end, str_json);//vector<char> to string/wstring
-    std::stringstream ss_json(str_json);
-    boost::property_tree::read_json(ss_json, jsons);
+    //std::string str_json;
+    //vecToString(start, end, str_json);//vector<char> to string/wstring
+    Json::Reader reader;
+    if (!reader.parse(start, end, jsons))
+        return false;
+    return true;
 }
 
 template class Fastcgipp::Http::Environment<char>;
