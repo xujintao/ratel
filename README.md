@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/xujintao/ratel.svg?branch=master)](https://travis-ci.org/xujintao/ratel)
 
-Ratel is a api server solution using c/c++. It is based on spawn-fcgi, fastcgi, fastcgi++ and many other libraries which can achieve through github.
+Ratel is a api server solution using c/c++. It is based on spawn-fcgi, fastcgi, fastcgi++, boost and many other libraries which can achieve through github.
 
 ## Library
 
@@ -8,23 +8,21 @@ Ratel is a api server solution using c/c++. It is based on spawn-fcgi, fastcgi, 
 ratel/app fork process via spawn-fcgi.
 
 * [fcgi or fastcgi](https://github.com/LuaDist/fcgi)  
-A blocking fastcgi based network library.
+A blocking fastcgi based network library. Because of the feature of blocking, Ratel discard, and here just take it to compare with the next non-blocking network library.
 
 * [fastcgi++](https://github.com/eddic/fastcgipp)  
 A non-blocking fastcgi based network library with c++14, which means our compiler must be support c++14. One receiver-thread(as producer) accept request asynchronously, 
 and push all request to a container which other multi-thread(act as consumer) pull from and handle.
 
 * log  
-1.The log module in ratel is based on [Boost.log](http://www.boost.org/doc/libs/1_54_0/libs/log/doc/html/index.html), and version must be at least 1.54.0.  
+1.The log module in ratel is based on [boost.log](http://www.boost.org/doc/libs/1_54_0/libs/log/doc/html/index.html), and version must be at least 1.54.0.  
 2.Instead of verboss "<<", it use printf-style syntax, which means we can log like this:  
 ```
 Log(info, "Num:%d, note:%s", 1, "log here");
 ```
 
 * [jsoncpp](https://github.com/open-source-parsers/jsoncpp)  
-Before jsoncpp, i tried boost.ptree and rapidJson. However [boost.ptree](https://svn.boost.org/trac10/ticket/9721#no2) does not conform to JSON standard and 
-[rapidJson](https://github.com/Tencent/rapidjson) is extremely clunky to use. As for jsoncpp, the fact that [Serialize UTF-8 string with Unicode escapes #687](https://github.com/open-source-parsers/jsoncpp/pull/687) 
-since v1.8.4 seems to be useless. So, here i will stay with v1.8.3 until they makes some change.
+Before jsoncpp, i tried [boost.ptree](http://www.boost.org/doc/libs/1_54_0/doc/html/property_tree.html) and [rapidJson](https://github.com/Tencent/rapidjson). However boost.ptree [does not conform to JSON standard](https://svn.boost.org/trac10/ticket/9721#no2) and rapidJson is extremely clunky to use. As for jsoncpp, the fact that [Serialize UTF-8 string with Unicode escapes #687](https://github.com/open-source-parsers/jsoncpp/pull/687) since v1.8.4 seems to be useless. So, here i will stay with v1.8.3 until it makes some change.
 
 ## Quick start
 On Ubuntu 14.04, start with the following steps:
