@@ -12,8 +12,8 @@ using namespace Fastcgipp::Http;        //export RequestMethod::POST
 class BaseHandler : public Fastcgipp::Request<char>
 {
 public:
-    BaseHandler();
-    virtual ~BaseHandler();
+    BaseHandler() : Fastcgipp::Request<char>(5 * 1024){}
+    virtual ~BaseHandler(){}
 
     std::string Cookie2String();
     void LogRequest();

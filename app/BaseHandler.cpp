@@ -2,15 +2,6 @@
 #include "log.h"
 #include "AK47.h"
 
-BaseHandler::BaseHandler()
-{
-}
-
-
-BaseHandler::~BaseHandler()
-{
-}
-
 std::string BaseHandler::Cookie2String()
 {
     std::ostringstream oss;

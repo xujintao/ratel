@@ -23,7 +23,7 @@ bool RequestHandler::response()
     if (path.size() < 3)
     {
         ResponseError(ERR_NO_API);
-        return false;
+        return true;
     }
 
     auto moduleId = URL2ID::FindMid(path[1]);
