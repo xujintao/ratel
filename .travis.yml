@@ -1,40 +1,34 @@
-# travis-ci.org - continuous testing environment - http://docs.travis-ci.com/
 language: cpp
 compiler:
-  - gcc
-
+- gcc
 matrix:
   include:
-    # works on Precise and Trusty
-    - os: linux
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - gcc-7
-            - g++-7
-            - libboost-all-dev
-      env:
-        - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
-
+  - os: linux
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - gcc-7
+        - g++-7
+        - libboost-all-dev
+    env:
+    - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
 before_script:
-# set CC(CXX) env
-    - eval "${MATRIX_EVAL}"
-    - echo $CC
-
-# link gcc(g++) to gcc-7(g++-7)
-    - ls -l /usr/bin | grep gcc
-    - gcc --version
-    - sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc -f
-    - sudo ln -s /usr/bin/g++-7 /usr/bin/g++ -f
-    - gcc --version
-
-# pwd
-    - pwd
-
-
-# The build machines are centos7.3 x86-64
-
+- eval "${MATRIX_EVAL}"
+- echo $CC
+- ls -l /usr/bin | grep gcc
+- gcc --version
+- sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc -f
+- sudo ln -s /usr/bin/g++-7 /usr/bin/g++ -f
+- gcc --version
+- pwd
 script:
-    - ./build.sh
+- ./build.sh
+before_install:
+- openssl aes-256-cbc -K $encrypted_5dbe78cb2974_key -iv $encrypted_5dbe78cb2974_iv
+  -in id_rsa_aws.enc -out ../.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- echo -e "Host 13.230.9.180\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+after_sucess:
+- scp -o stricthostkeychecking=no -r app lib* *.sh 13.230.9.180:/opt/app/ratel
