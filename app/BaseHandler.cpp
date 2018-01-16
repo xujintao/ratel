@@ -30,15 +30,15 @@ void BaseHandler::LogRequest()
     strRequset += "{\"ip\":\"" + ssRemoteAddress.str()
                 + "\",\"uri\":\"" + env.requestUri
                 + "\",\"host\":\"" + env.host
-                + "\",\"postData\":\"" + strData
-                + "\",\"cookies\":\"" + Cookie2String()
+                + "\",\"postData\":" + strData
+                + ",\"cookies\":\"" + Cookie2String()
                 + "\",\"userAgent\":\"" + env.userAgent
                 + "\",\"referer\":\"" + env.referer
                 + "\",\"contentType\":\"" + env.contentType
                 + "\",\"requestMethod\":\"" + requestMethodLabels[static_cast<int>(env.requestMethod)]
                 + "\",\"scriptName\":\"" + env.scriptName
-                + "\",\"contentLength\":\"" + std::to_string(env.contentLength)
-                + "\",\"remotePort\":\"" + std::to_string(env.remotePort)
+                + "\",\"contentLength\":" + std::to_string(env.contentLength)
+                + ",\"remotePort\":" + std::to_string(env.remotePort)
                 + "}";
     Log(info, "req-in %s", strRequset.c_str());
 }
