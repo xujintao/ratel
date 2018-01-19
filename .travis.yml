@@ -1,6 +1,8 @@
 language: cpp
 compiler:
 - gcc
+services:
+- docker
 matrix:
   include:
   - os: linux
@@ -14,6 +16,21 @@ matrix:
         - libboost-all-dev
     env:
     - MATRIX_EVAL="CC=gcc-7 && CXX=g++-7"
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_5dbe78cb2974_key -iv $encrypted_5dbe78cb2974_iv
+  -in id_rsa_aws.enc -out ~/.ssh/id_rsa -d
+- chmod 600 ~/.ssh/id_rsa
+- echo -e "Host 13.230.9.180\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
+install:
+# compile ratel by dev_container
+- docker pull xujintao/ubuntu_docker:dev
+- docker run -v /home/travis/build/xujintao/ratel:/project xujintao/ubuntu_docker:dev
+
+# deploy ratel into product_container
+- docker build -t xujintao/retal:latest ./
+
 before_script:
 - eval "${MATRIX_EVAL}"
 - echo $CC
@@ -23,12 +40,11 @@ before_script:
 - sudo ln -s /usr/bin/g++-7 /usr/bin/g++ -f
 - gcc --version
 - pwd
+
 script:
 - ./build.sh
-before_install:
-- openssl aes-256-cbc -K $encrypted_5dbe78cb2974_key -iv $encrypted_5dbe78cb2974_iv
-  -in id_rsa_aws.enc -out ~/.ssh/id_rsa -d
-- chmod 600 ~/.ssh/id_rsa
-- echo -e "Host 13.230.9.180\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+
 after_success:
-- scp -o stricthostkeychecking=no -r app lib* *.sh centos@13.230.9.180:/opt/app/ratel
+- scp -o stricthostkeychecking=no -r build/* centos@13.230.9.180:/opt/app/ratel
+#- docker push xujintao/retal:latest
+
