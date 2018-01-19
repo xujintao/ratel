@@ -1,3 +1,5 @@
+#!/bin/bash
+# make
 make -C ./libspawnfcgi clean
 make -C ./libcommon clean
 make -C ./libfcgi clean
@@ -9,3 +11,8 @@ make -C ./libcommon
 make -C ./libfcgi 
 make -C ./libfastcgipp
 make -C ./app
+
+# cp app.exe and *.so to build path
+mkdir build
+cp -f ./app/Debug/app ./build/app.exe
+cp -f ./*/Debug/*.so ./build
