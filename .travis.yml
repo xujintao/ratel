@@ -46,5 +46,6 @@ script:
 
 after_success:
 - scp -o stricthostkeychecking=no -r build/* centos@13.230.9.180:/opt/app/ratel
-#- docker push xujintao/retal:latest
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+- docker push xujintao/retal:latest
 
