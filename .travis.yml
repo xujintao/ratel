@@ -16,14 +16,14 @@ install:
 - docker run -v /home/travis/build/xujintao/ratel:/project xujintao/docker4cpp:ubuntu-dev
 
 # deploy ratel into ratel:ubuntu
-- docker build -t xujintao/retal:ubuntu ./
+- docker build -t xujintao/ratel:ubuntu ./
 
 # compile ratel by centos-dev
-- docker pull xujintao/docker4cpp:ubuntu-dev
+- docker pull xujintao/docker4cpp:centos-dev
 - docker run -v /home/travis/build/xujintao/ratel:/project xujintao/docker4cpp:ubuntu-dev
 
 # deploy ratel into ratel:centos
-- docker build -t xujintao/retal:centos ./
+- docker build -t xujintao/ratel:centos ./
 
 before_script:
 - gcc --version
