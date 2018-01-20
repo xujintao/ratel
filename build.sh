@@ -13,6 +13,6 @@ make -C ./libfastcgipp
 make -C ./app
 
 # cp app.exe and *.so to build path
-mkdir build
+mkdir -p build
 cp -f ./app/Debug/app ./build/app.exe
 cp -f ./*/Debug/*.so ./build
