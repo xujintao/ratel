@@ -42,16 +42,14 @@ $ sudo ln -s /usr/bin/g++-7 /usr/bin/g++ -f
 If CentOS7.4, you can get started in four easy steps:  
 ```sh
 # 1. Install a package with repository for your system:
-# On CentOS, install package centos-release-scl available in CentOS repository:
-$ sudo yum install centos-release-scl
-
-# On RHEL, enable RHSCL repository for you system:
-$ sudo yum-config-manager --enable rhel-server-rhscl-7-rpms
+# install package centos-release-scl-rh available in CentOS repository:
+$ sudo yum install centos-release-scl-rh
 
 # 2. Install the collection:
 $ sudo yum install devtoolset-7-gcc devtoolset-7-gcc-c++ devtoolset-7-gdb
 
 # 3. Start using software collections:
+#$ scl enable devtoolset-7 bash
 $ source /opt/rh/devtoolset-7/enable
 
 # 4. Yet the default Boost repo version is 1.53.0, so download 1.54.0 and build.
