@@ -14,16 +14,14 @@ install:
 # compile ratel by ubuntu-dev
 - docker pull xujintao/docker4cpp:ubuntu-dev
 - docker run -v /home/travis/build/xujintao/ratel:/project xujintao/docker4cpp:ubuntu-dev
-
 # deploy ratel into ratel:ubuntu
 - docker build -t xujintao/ratel:ubuntu ./
 
 # compile ratel by centos-dev
 - docker pull xujintao/docker4cpp:centos-dev
 - docker run -v /home/travis/build/xujintao/ratel:/project xujintao/docker4cpp:ubuntu-dev
-
 # deploy ratel into ratel:centos
-- docker build -t xujintao/ratel:centos ./
+#- docker build -t xujintao/ratel:centos ./
 
 before_script:
 - gcc --version
@@ -38,4 +36,4 @@ after_success:
 - scp -o stricthostkeychecking=no -r build/* centos@13.230.9.180:/opt/www/ratel
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 - docker push xujintao/ratel:ubuntu
-- docker push xujintao/ratel:centos
+#- docker push xujintao/ratel:centos
