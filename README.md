@@ -60,7 +60,7 @@ $ cd boost_1_54_0
 $ ./bootstrap.sh
 $ ./b2 -d0 --with-log --with-thread --with-system --with-filesystem
 $ cp -drf boost /usr/include
-$ cp -drf stage/lib* /usr/lib64
+$ cp -drf stage/lib/* /usr/lib64
 ```
 
 Then, clone and make like this:  
