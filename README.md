@@ -52,8 +52,15 @@ $ sudo yum install devtoolset-7-gcc devtoolset-7-gcc-c++ devtoolset-7-gdb
 #$ scl enable devtoolset-7 bash
 $ source /opt/rh/devtoolset-7/enable
 
-# 4. Yet the default Boost repo version is 1.53.0, so download 1.54.0 and build.
-$ ...
+# 4. The default boost from yum is 1.53.0, we have to download 1.54.0 and build.
+$ cd ~
+$ wget -q https://sourceforge.net/projects/boost/files/boost/1.54.0/boost_1_54_0.tar.gz
+$ tar -xzf boost_1_54_0.tar.gz
+$ cd boost_1_54_0
+$ ./bootstrap.sh
+$ ./b2 -d0 --with-log --with-thread --with-system --with-filesystem
+$ cp -drf boost /usr/include
+$ cp -drf stage/lib* /usr/lib64
 ```
 
 Then, clone and make like this:  
