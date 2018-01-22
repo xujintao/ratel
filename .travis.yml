@@ -37,9 +37,9 @@ script:
 - docker ps -a
 
 after_success:
-- export RATEL_PACK_NAME=ratel${RATEL_BUILD_VER}.tar.gz
-- tar -czvf build/* RATEL_PACK_NAME
-- scp -o stricthostkeychecking=no RATEL_PACK_NAME centos@13.230.9.180:/opt/www/ratel/
+- export RATEL_PACK=ratel${RATEL_BUILD_VER}.tar.gz
+- tar -czvf build/* RATEL_PACK
+- scp -o stricthostkeychecking=no RATEL_PACK centos@13.230.9.180:/opt/www/ratel/
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
 - docker push xujintao/ratel:$RATEL_BUILD_VER
 #- docker push xujintao/ratel:centos
