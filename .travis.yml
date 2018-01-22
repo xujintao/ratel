@@ -4,6 +4,9 @@ compiler:
 services:
 - docker
 
+env:
+- TAG_VER=1.0.0
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_5dbe78cb2974_key -iv $encrypted_5dbe78cb2974_iv
   -in id_rsa_aws.enc -out ~/.ssh/id_rsa -d
@@ -15,7 +18,7 @@ install:
 - docker pull xujintao/docker4cpp:ubuntu-dev
 - docker run -v /home/travis/build/xujintao/ratel:/project xujintao/docker4cpp:ubuntu-dev
 # deploy ratel into ratel:ubuntu
-- export APPVER=${TRAVIS_TAG}.${TRAVIS_BUILD_NUMBER}
+- export APPVER=${TAG_VER}.${TRAVIS_BUILD_NUMBER}
 - docker build -t xujintao/ratel:$APPVER ./
 
 # compile ratel by centos-dev
