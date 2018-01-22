@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# check container env 
+gcc --version
+
 # make
 make -C ./libspawnfcgi clean
 make -C ./libcommon clean
