@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/xujintao/ratel.svg?branch=master)](https://travis-ci.org/xujintao/ratel)
 
-Ratel is a api server solution using c/c++. It is based on spawn-fcgi, fastcgi, fastcgi++, boost and many other libraries which can achieve through github.
+Ratel is a api server solution using c/c++:sunglasses:. It is based on spawn-fcgi, fastcgi, fastcgi++, boost and many other libraries which can achieve through github.
 
 ## Library
 
@@ -16,19 +16,22 @@ and push all request to a container which other multi-thread(act as consumer) pu
 
 * log  
 1.The log module in ratel is based on [boost.log](http://www.boost.org/doc/libs/1_54_0/libs/log/doc/html/index.html), and version must be at least 1.54.0.  
-2.Instead of verboss "<<", it use printf-style syntax, which means we can log like this:  
+2.Instead of verboss "<<", it use printf-style syntax:sunglasses:, which means we can log like this:  
 ```
 Log(info, "Num:%d, note:%s", 1, "log here");
 ```
 
 * [jsoncpp](https://github.com/open-source-parsers/jsoncpp)  
-Before jsoncpp, i tried [boost.ptree](http://www.boost.org/doc/libs/1_54_0/doc/html/property_tree.html) and [rapidJson](https://github.com/Tencent/rapidjson). However boost.ptree [does not conform to JSON standard](https://svn.boost.org/trac10/ticket/9721#no2) and rapidJson is extremely clunky to use. As for jsoncpp, the fact that [Serialize UTF-8 string with Unicode escapes #687](https://github.com/open-source-parsers/jsoncpp/pull/687) since v1.8.4 seems to be useless. So, here i will stay with v1.8.3 until it makes some change.
+Before jsoncpp, i tried [boost.ptree](http://www.boost.org/doc/libs/1_54_0/doc/html/property_tree.html) and [rapidJson](https://github.com/Tencent/rapidjson). 
+However boost.ptree [does not conform to JSON standard](https://svn.boost.org/trac10/ticket/9721#no2) and rapidJson is extremely clunky to use. As for jsoncpp, 
+the fact that [Serialize UTF-8 string with Unicode escapes #687](https://github.com/open-source-parsers/jsoncpp/pull/687) since v1.8.4 seems to be useless:disappointed_relieved:. 
+So, here i will stay with v1.8.3 until it makes some change.
 
 ## Quick start
 On Ubuntu 14.04, start with the following steps:
 ```sh
 # 1. Add toolchain repo:
-$ sudo apt-add-repository "ppa:ubuntu-toolchain-r/test"  
+$ sudo apt-add-repository "ppa:ubuntu-toolchain-r/test"
 $ sudo apt-get update
 
 # 2. Ubuntu 14.04 default boost repo version is 1.54.0:
@@ -39,7 +42,7 @@ $ sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc -f
 $ sudo ln -s /usr/bin/g++-7 /usr/bin/g++ -f
 ```
 
-If CentOS7.4, you can get started in four easy steps:  
+If CentOS7.4, you can get started in four:unamused: easy steps:  
 ```sh
 # 1. Install a package with repository for your system:
 # install package centos-release-scl-rh available in CentOS repository:
@@ -70,6 +73,13 @@ $ cd ratel
 $ ./build.sh
 $ ./restart.sh
 ```
+
+Now, it should be running well locally. Next we will show how to deploy it to field server by travis-ci.
+
+## Deploy
+![](https://github.com/xujintao/ratel/blob/master/deploy.png)
+* Travis-CI git clone ratel from github, build this project with the [docker4cpp](https://github.com/xujintao/docker4cpp) container, 
+and then package directely to field server or build another runtime image to docker hub.  
 
 ## License
 
