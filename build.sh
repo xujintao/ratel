@@ -1,4 +1,9 @@
 #!/bin/bash
+#test devtoolset-7 env for docker
+if [ -f /opt/rh/devtoolset-7/enable ];then
+echo test /opt/rh/devtoolset-7/enable
+source /opt/rh/devtoolset-7/enable
+fi
 
 # check container env 
 gcc --version
