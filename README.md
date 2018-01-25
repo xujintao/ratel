@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/xujintao/ratel.svg?branch=master)](https://travis-ci.org/xujintao/ratel)
 
-Ratel is a api server solution using c/c++:sunglasses:. It is based on spawn-fcgi, fastcgi, fastcgi++, boost and many other libraries which can achieve through github.
+Ratel is a api server solution using c/c++:sunglasses:. It is based on spawn-fcgi, fastcgi, fastcgi++, boost and many other libraries which can achieve through github.  
+![](https://github.com/xujintao/ratel/blob/master/ratel.png)
 
 ## Library
 
