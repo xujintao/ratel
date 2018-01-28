@@ -15,6 +15,6 @@ RUN echo "===>update apt source" && apt-get -y update && \
 
 # host dir -> container dir
 ADD ./build/* /opt/www/ratel/
-ADD ./restart.sh /opt/www/ratel/
+ADD ./restart4docker.sh /opt/www/ratel/restart.sh
 
 CMD /opt/www/ratel/restart.sh
