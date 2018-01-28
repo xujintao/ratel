@@ -79,8 +79,18 @@ Now, it should be running well locally. Next we will show how to deploy it to fi
 
 ## Deploy
 ![](https://github.com/xujintao/ratel/blob/master/deploy.png)
-* Travis-CI git clone ratel from github, build this project with the [docker4cpp](https://github.com/xujintao/docker4cpp) container, 
-and then package directely to field server or build another runtime image to docker hub.  
+1. Travis-CI git ratel project clone from github, building with the help of [docker4cpp](https://github.com/xujintao/docker4cpp) container, 
+and then package all the result directely to test/product server or build runtime images to docker hub.  
+
+2. c++ runtime 
+
+| runtime | CentOS7.4 | ubuntu14.04 |
+| ------  | --------- | ----------- |
+| libc | /usr/lib64/libc-2.17.so (2012.12.25) | /lib/x86_64-linux-gnu/libc-2.19.so (2014.2.7) |
+| libstdc++(c++11) | /usr/lib64/libstdc++.so.6.0.19 (2014.5.22) | /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.19 (2014.5.22) |
+| libstdc++(c++17) | /opt/rh/devtoolset-7/.../x86_64-redhat-linux/7/* (2017-12-25) | /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.24 (2017.8.20) | 
+> [GCC Development Plan](https://gcc.gnu.org/develop.html)  
+> [ABI Policy and Guidelines](https://gcc.gnu.org/onlinedocs/libstdc++/manual/abi.html)  
 
 ## License
 
