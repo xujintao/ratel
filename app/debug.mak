@@ -13,7 +13,7 @@ OBJCOPY := objcopy
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG=1
-INCLUDE_DIRS := ../libspawnfcgi ../libfcgi ../libfastcgipp ../libcommon
+INCLUDE_DIRS := ../libspawnfcgi ../libfcgi ../libfastcgipp ../libcommon/mysql ../libcommon/mysql/mysqlconn/include ../libcommon/log ../libcommon/jsoncpp
 LIBRARY_DIRS := 
 LIBRARY_NAMES := 
 ADDITIONAL_LINKER_INPUTS := 

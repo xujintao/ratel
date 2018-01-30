@@ -13,9 +13,9 @@ OBJCOPY := objcopy
 
 #Additional flags
 PREPROCESSOR_MACROS := DEBUG BOOST_LOG_DYN_LINK
-INCLUDE_DIRS := ./
+INCLUDE_DIRS := ./mysql/mysqlconn/include ./log ./jsoncpp
 LIBRARY_DIRS := 
-LIBRARY_NAMES := pthread boost_log boost_system boost_thread boost_filesystem
+LIBRARY_NAMES := pthread boost_log boost_system boost_thread boost_filesystem mysqlcppconn
 ADDITIONAL_LINKER_INPUTS := 
 MACOS_FRAMEWORKS := 
 LINUX_PACKAGES := 
