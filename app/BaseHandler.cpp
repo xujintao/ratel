@@ -2,6 +2,23 @@
 #include "log.h"
 #include "AK47.h"
 
+BaseHandler::BaseHandler() : Fastcgipp::Request<char>(5 * 1024)
+{
+    //connect to redis
+
+    //connect to mysql
+    m_db.reset(new DataBase);
+    if (!(m_db && m_db->Init("tcp://127.0.0.1:3306", "root", "root", "test")))
+    {
+        Log(error, "DB init failed");
+        exit(EXIT_FAILURE);
+    }
+}
+
+BaseHandler::~BaseHandler()
+{
+}
+
 std::string BaseHandler::Cookie2String()
 {
     std::ostringstream oss;

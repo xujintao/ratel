@@ -9,5 +9,8 @@ public:
 
 protected:
     void HandleOpenAPI(const int id);
+
+private:
+    void ResponseWeTest();
 };
 
