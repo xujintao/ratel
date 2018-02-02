@@ -9,19 +9,20 @@
 #include "DataBase.h"
 
 using namespace Fastcgipp::Http;        //export RequestMethod::POST
+typedef std::shared_ptr<Fastcgipp::Request<char>> RequestPtr;
+typedef std::shared_ptr<Fastcgipp::Request_base> _RequestPtr;
 
-class BaseHandler : public Fastcgipp::Request<char>
+class BaseHandler : public Fastcgipp::RequestHandler_base
 {
 public:
-    //BaseHandler() : Fastcgipp::Request<char>(5 * 1024){}
     BaseHandler();
     virtual ~BaseHandler();
 
-    std::string Cookie2String();
-    void LogRequest();
-    int Response(const char* contentType, const char* content, int errcode);
-    void ResponseJson(Json::Value& retJson);
-    void ResponseError(int errcode, std::string paramMsg="");
+    std::string Cookie2String(RequestPtr request);
+    void LogRequest(RequestPtr request);
+    int Response(RequestPtr request, const char* contentType, const char* content, int errcode);
+    void ResponseJson(RequestPtr request, Json::Value& retJson);
+    void ResponseError(RequestPtr request, int errcode, std::string paramMsg = "");
 
 protected:
     std::shared_ptr<DataBase> m_db;

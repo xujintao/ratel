@@ -8,9 +8,9 @@ public:
     virtual ~UserAuthHandler();
 
 protected:
-    void HandleUserAuth(int id);
+    void HandleUserAuth(RequestPtr request, int id);
 
 private:
-    void LoginByToken();
+    void LoginByToken(RequestPtr request);
 };
 

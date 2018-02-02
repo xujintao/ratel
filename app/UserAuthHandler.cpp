@@ -10,9 +10,9 @@ UserAuthHandler::~UserAuthHandler()
 {
 }
 
-void UserAuthHandler::LoginByToken()
+void UserAuthHandler::LoginByToken(RequestPtr request)
 {
-    const Json::Value& params = environment().jsons;
+    const Json::Value& params = request->environment().jsons;
 
     //入口参数检查
     if (!(params.isObject()
@@ -20,7 +20,7 @@ void UserAuthHandler::LoginByToken()
         && params["token"].isString()
         && params["ver"].isString()))
     {
-        return ResponseError(ERR_NO_PARAMETER);
+        return ResponseError(request, ERR_NO_PARAMETER);
     }
 
     auto uid = params["uid"].asUInt();
@@ -41,30 +41,30 @@ void UserAuthHandler::LoginByToken()
     retJson["a"].append(4);
     //retJson["a"].append(1).append(2).append(3).append(4);//invalid
 
-    ResponseJson(retJson);
+    ResponseJson(request, retJson);
 }
 
-void UserAuthHandler::HandleUserAuth(int id)
+void UserAuthHandler::HandleUserAuth(RequestPtr request, int id)
 {
     //验证
 
     //id处理
-    switch (environment().requestMethod)
+    switch (request->environment().requestMethod)
     {
     case RequestMethod::POST:
         switch (id)
         {
         case URL_ID::LoginByToken:
-            LoginByToken();
+            LoginByToken(request);
             break;
         default:
-            ResponseError(ERR_NO_API);
+            ResponseError(request, ERR_NO_API);
             break;
         }
         break;
     case RequestMethod::GET:
     default:
-        ResponseError(ERR_NO_API);
+        ResponseError(request, ERR_NO_API);
         break;
     }
 }

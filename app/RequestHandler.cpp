@@ -12,17 +12,19 @@ RequestHandler::~RequestHandler()
 {
 }
 
-bool RequestHandler::response()
+bool RequestHandler::Handle(_RequestPtr _request)
 {
+    RequestPtr request = std::dynamic_pointer_cast<Fastcgipp::Request<char>>(_request);
+
     //log
-    LogRequest();
+    LogRequest(request);
 
     //处理业务
     std::vector<std::string> path;
-    boost::split(path, environment().scriptName, boost::is_any_of("/"));
+    boost::split(path, request->environment().scriptName, boost::is_any_of("/"));
     if (path.size() < 3)
     {
-        ResponseError(ERR_NO_API);
+        ResponseError(request, ERR_NO_API);
         return true;
     }
 
@@ -31,13 +33,13 @@ bool RequestHandler::response()
     switch (moduleId)
     {
     case OpenAPI:
-        HandleOpenAPI(id);
+        HandleOpenAPI(request, id);
         break;
     case UserAuth:
-        HandleUserAuth(id);
+        HandleUserAuth(request, id);
         break;
     default:
-        ResponseError(ERR_NO_API);
+        ResponseError(request, ERR_NO_API);
         break;
     }
     return true;

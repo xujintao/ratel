@@ -8,9 +8,9 @@ public:
     virtual ~OpenAPIHandler();
 
 protected:
-    void HandleOpenAPI(const int id);
+    void HandleOpenAPI(RequestPtr request, const int id);
 
 private:
-    void ResponseWeTest();
+    void ResponseWeTest(RequestPtr request);
 };
 

@@ -9,6 +9,6 @@ class RequestHandler : public OpenAPIHandler
 public:
     RequestHandler();
     virtual ~RequestHandler();
-    bool response();//实现response接口
+    bool Handle(_RequestPtr _request) override;//实现Handle接口
 };
 

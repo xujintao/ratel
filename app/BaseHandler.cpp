@@ -2,7 +2,7 @@
 #include "log.h"
 #include "AK47.h"
 
-BaseHandler::BaseHandler() : Fastcgipp::Request<char>(5 * 1024)
+BaseHandler::BaseHandler()
 {
     //connect to redis
 
@@ -19,20 +19,20 @@ BaseHandler::~BaseHandler()
 {
 }
 
-std::string BaseHandler::Cookie2String()
+std::string BaseHandler::Cookie2String(RequestPtr request)
 {
     std::ostringstream oss;
-    if (environment().cookies.size())
-    for (const auto& cookie : environment().cookies)
+    if (request->environment().cookies.size())
+    for (const auto& cookie : request->environment().cookies)
         oss << cookie.first << ":" << cookie.second;
     else
         oss << "";
     return oss.str();
 }
 
-void BaseHandler::LogRequest()
+void BaseHandler::LogRequest(RequestPtr request)
 {
-    const auto& env = environment();
+    const auto& env = request->environment();
 
     //remoteAddress
     std::stringstream ssRemoteAddress;
@@ -48,7 +48,7 @@ void BaseHandler::LogRequest()
                 + "\",\"uri\":\"" + env.requestUri
                 + "\",\"host\":\"" + env.host
                 + "\",\"postData\":" + strData
-                + ",\"cookies\":\"" + Cookie2String()
+                + ",\"cookies\":\"" + Cookie2String(request)
                 + "\",\"userAgent\":\"" + env.userAgent
                 + "\",\"referer\":\"" + env.referer
                 + "\",\"contentType\":\"" + env.contentType
@@ -60,13 +60,13 @@ void BaseHandler::LogRequest()
     Log(info, "req-in %s", strRequset.c_str());
 }
 
-int BaseHandler::Response(const char* contentType, const char* content, int errcode)
+int BaseHandler::Response(RequestPtr request, const char* contentType, const char* content, int errcode)
 {
-    out << "Content-type: " << contentType << "; charset=utf-8\r\n\r\n"
+    request->out << "Content-type: " << contentType << "; charset=utf-8\r\n\r\n"
         << content;
 }
 
-void BaseHandler::ResponseJson(Json::Value& retJson)
+void BaseHandler::ResponseJson(RequestPtr request, Json::Value& retJson)
 {
     retJson["time"] = time(NULL);
 
@@ -75,11 +75,11 @@ void BaseHandler::ResponseJson(Json::Value& retJson)
     fwriter.omitEndingLineFeed();//去除尾部换行符
     std::string retStr = fwriter.write(retJson);
 
-    Response("application/json", retStr.c_str(), ERR_OK);
-    Log(debug, "ResponseJson %s %s", environment().requestUri.c_str(), retStr.c_str());
+    Response(request, "application/json", retStr.c_str(), ERR_OK);
+    Log(debug, "ResponseJson %s %s", request->environment().requestUri.c_str(), retStr.c_str());
 }
 
-void BaseHandler::ResponseError(int errcode, std::string paramMsg)
+void BaseHandler::ResponseError(RequestPtr request, int errcode, std::string paramMsg)
 {
     std::string strErrMsg = paramMsg.empty() ? AK47::GetErrMsg(errcode) : paramMsg;
 
@@ -115,6 +115,6 @@ void BaseHandler::ResponseError(int errcode, std::string paramMsg)
     fwriter.omitEndingLineFeed();//去除尾部换行符
     std::string retStr = fwriter.write(retJson);
 
-    Response("application/json", retStr.c_str(), errcode);
-    Log(errcode == 0 ? debug : error, "ResponseError %s %s", environment().requestUri.c_str(), retStr.c_str());
+    Response(request, "application/json", retStr.c_str(), errcode);
+    Log(errcode == 0 ? debug : error, "ResponseError %s %s", request->environment().requestUri.c_str(), retStr.c_str());
 }
