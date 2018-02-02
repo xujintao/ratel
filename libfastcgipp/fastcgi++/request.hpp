@@ -45,6 +45,8 @@ namespace Fastcgipp
     class Request_base
     {
     public:
+        typedef std::shared_ptr<Request_base> RequestPtr;
+
         //! Request Handler
         /*!
          * This function is called by Manager::handler() to handle messages
@@ -57,7 +59,7 @@ namespace Fastcgipp
          *         it \e after unlocking Request::mutex.
          * @sa callback
          */
-        virtual std::unique_lock<std::mutex> handler() =0;
+        virtual std::unique_lock<std::mutex> handler(const std::function<bool(RequestPtr)> response) = 0;
 
         virtual ~Request_base() {}
 
@@ -98,6 +100,7 @@ namespace Fastcgipp
      * @author  Eddie Carle &lt;eddie@isatec.ca&gt;
      */
     template<class charT> class Request: public Request_base
+                                       , public std::enable_shared_from_this<Request_base>
     {
     public:
         //! Initializes what it can. configure() to finish.
@@ -144,11 +147,11 @@ namespace Fastcgipp
                     send,
                 const std::function<void(Message)> callback);
 
-        std::unique_lock<std::mutex> handler();
+        std::unique_lock<std::mutex> handler(const std::function<bool(RequestPtr)> response);
 
         virtual ~Request() {}
 
-    protected:
+    //protected:
         //! Accessor for the HTTP environment data
         const Http::Environment<charT>& environment() const
         {
@@ -213,7 +216,7 @@ namespace Fastcgipp
          * @return Boolean value indication completion (true means complete)
          * @sa callback
          */
-        virtual bool response() =0;
+        //virtual bool response() =0;
 
         //! Generate a data input response
         /*!

@@ -258,6 +258,7 @@ void Fastcgipp::Manager_base::handler()
             std::defer_lock);
     std::unique_lock<std::mutex> tasksLock(m_tasksMutex);
     std::shared_lock<std::shared_timed_mutex> requestsReadLock(m_requestsMutex);
+    std::shared_ptr<RequestHandler_base> requestHandler = makeRequestHandler();
 
     while(!m_terminate && !(m_stop && m_requests.empty()))
     {
@@ -283,7 +284,7 @@ void Fastcgipp::Manager_base::handler()
 
                     if(requestLock)
                     {
-                        auto lock = request->second->handler();
+                        auto lock = request->second->handler(std::bind(&RequestHandler_base::Handle, requestHandler.get(), std::placeholders::_1));
                         if(!lock || !id.m_socket.valid())
                         {
 #if FASTCGIPP_LOG_LEVEL > 3

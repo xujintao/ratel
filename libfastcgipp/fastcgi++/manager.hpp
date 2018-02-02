@@ -45,6 +45,14 @@
 //! Topmost namespace for the fastcgi++ library
 namespace Fastcgipp
 {
+    class RequestHandler_base
+    {
+    public:
+        RequestHandler_base(){}
+        virtual ~RequestHandler_base(){}
+        virtual bool Handle(std::shared_ptr<Request_base> request) = 0;
+    };
+
     //! General task and protocol management class base
     /*!
      * Handles all task and protocol management, creation/destruction of
@@ -179,6 +187,9 @@ namespace Fastcgipp
                 const Protocol::Role& role,
                 bool kill) =0;
 
+        //! Make a request handler object
+        virtual std::unique_ptr<RequestHandler_base> makeRequestHandler() = 0;
+
         //! Handles low level communication with the other side
         Transceiver m_transceiver;
 
@@ -279,7 +290,7 @@ namespace Fastcgipp
      * @date    May 13, 2016
      * @author  Eddie Carle &lt;eddie@isatec.ca&gt;
      */
-    template<class RequestT> class Manager: public Manager_base
+    template<class RequestHandlerT> class Manager: public Manager_base
     {
     public:
         //! Sole constructor
@@ -299,8 +310,8 @@ namespace Fastcgipp
         {
             //using namespace std::placeholders;
 
-            std::unique_ptr<Request_base> request(new RequestT);
-            dynamic_cast<RequestT&>(*request).configure(
+            std::unique_ptr<Request_base> request(new Request<char>(5 * 1024));
+            dynamic_cast<Request<char>&>(*request).configure(
                     id,
                     role,
                     kill,
@@ -309,6 +320,13 @@ namespace Fastcgipp
             return request;
         }
 
+        //! Make a request handler object
+        std::unique_ptr<RequestHandler_base> makeRequestHandler()
+        {
+            std::unique_ptr<RequestHandler_base> requeseHandler(new RequestHandlerT);
+            return requeseHandler;
+            //return std::make_unique<RequestHandler_base>(new RequestHandlerT);
+        }
     };
 }
 

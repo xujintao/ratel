@@ -53,7 +53,7 @@ template<class charT> void Fastcgipp::Request<charT>::complete()
 }
 
 template<class charT>
-std::unique_lock<std::mutex>Fastcgipp::Request<charT>::handler()
+std::unique_lock<std::mutex> Fastcgipp::Request<charT>::handler(const std::function<bool(RequestPtr)> response)
 {
     std::unique_lock<std::mutex> lock(m_messagesMutex);
     while(!m_messages.empty())
@@ -151,7 +151,7 @@ std::unique_lock<std::mutex>Fastcgipp::Request<charT>::handler()
         }
 
         m_message = std::move(message);
-        if(response())
+        if(response(shared_from_this()))
         {
             complete();
             break;
