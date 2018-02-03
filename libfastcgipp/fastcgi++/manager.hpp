@@ -182,7 +182,7 @@ namespace Fastcgipp
 
     protected:
         //! Make a request object
-        virtual std::unique_ptr<Request_base> makeRequest(
+        virtual std::shared_ptr<Request_base> makeRequest(
                 const Protocol::RequestId& id,
                 const Protocol::Role& role,
                 bool kill) =0;
@@ -201,7 +201,7 @@ namespace Fastcgipp
         std::mutex m_tasksMutex;
 
         //! An associative container for our requests
-        Protocol::Requests<std::unique_ptr<Request_base>> m_requests;
+        Protocol::Requests<std::shared_ptr<Request_base>> m_requests;
 
         //! Thread safe our requests
         std::shared_timed_mutex m_requestsMutex;
@@ -303,14 +303,14 @@ namespace Fastcgipp
 
     private:
         //! Make a request object
-        std::unique_ptr<Request_base> makeRequest(
+        std::shared_ptr<Request_base> makeRequest(
                 const Protocol::RequestId& id,
                 const Protocol::Role& role,
                 bool kill)
         {
             //using namespace std::placeholders;
 
-            std::unique_ptr<Request_base> request(new Request<char>(5 * 1024));
+            std::shared_ptr<Request_base> request(new Request<char>(5 * 1024));
             dynamic_cast<Request<char>&>(*request).configure(
                     id,
                     role,
