@@ -28,6 +28,9 @@ However boost.ptree [does not conform to JSON standard](https://svn.boost.org/tr
 the fact that [Serialize UTF-8 string with Unicode escapes #687](https://github.com/open-source-parsers/jsoncpp/pull/687) since v1.8.4 seems to be useless:disappointed_relieved:. 
 So, here i will stay with v1.8.3 until it makes some change.
 
+* mysqlwrapper  
+A [mysql-connector](https://github.com/mysql/mysql-connector-cpp) based sql wrapper which makes mysql easier to use.  
+
 ## Quick start
 On Ubuntu 14.04, start with the following steps:
 ```sh
@@ -35,36 +38,50 @@ On Ubuntu 14.04, start with the following steps:
 $ sudo apt-add-repository "ppa:ubuntu-toolchain-r/test"
 $ sudo apt-get update
 
-# 2. Ubuntu 14.04 default boost repo version is 1.54.0:
-$ sudo apt-get install gcc-7 g++-7 libboost-all-dev
+# 2. Install toolchain
+$ sudo apt-get install gcc-7 g++-7
 
-# 3. Enable gcc:
+# 3. Enable gcc7:
 $ sudo ln -s /usr/bin/gcc-7 /usr/bin/gcc -f
 $ sudo ln -s /usr/bin/g++-7 /usr/bin/g++ -f
+
+# 4. The default boost repo version on ubuntu 14.04 is 1.54.0:
+$ sudo apt-get install libboost-log1.54-dev \
+                       libboost-system1.54-dev \
+                       libboost-thread1.54-dev \
+                       libboost-filesystem1.54-dev
+
+# 5. Install mysql-connector-c++
+$ wget https://dev.mysql.com/get/Downloads/Connector-C++/mysql-connector-c++-1.1.9-linux-ubuntu14.04-x86-64bit.tar.gz
+$ tar -xzvf mysql-connector-c++-1.1.9-linux-ubuntu14.04-x86-64bit.tar.gz
+$ sudo cp -drf mysql-connector-c++-1.1.9-linux-ubuntu14.04-x86-64bit/lib/* /usr/lib
 ```
 
-If CentOS7.4, you can get started in four:unamused: easy steps:  
+If CentOS7.4, you can get started in five steps:  
 ```sh
 # 1. Install a package with repository for your system:
-# install package centos-release-scl-rh available in CentOS repository:
 $ sudo yum install centos-release-scl-rh
 
 # 2. Install the collection:
 $ sudo yum install devtoolset-7-gcc devtoolset-7-gcc-c++ devtoolset-7-gdb
 
 # 3. Start using software collections:
-#$ scl enable devtoolset-7 bash
 $ source /opt/rh/devtoolset-7/enable
 
-# 4. The default boost from yum is 1.53.0, we have to download 1.54.0 and build.
+# 4. The default boost from yum on centos7.4 is 1.53.0, we have to download 1.54.0 and build.
 $ cd ~
 $ wget -q https://sourceforge.net/projects/boost/files/boost/1.54.0/boost_1_54_0.tar.gz
 $ tar -xzf boost_1_54_0.tar.gz
 $ cd boost_1_54_0
 $ ./bootstrap.sh
-$ ./b2 -d0 --with-log --with-thread --with-system --with-filesystem
-$ cp -drf boost /usr/include
-$ cp -drf stage/lib/* /usr/lib64
+$ ./b2 --with-log --with-thread --with-system --with-filesystem
+$ sudo cp -drf boost /usr/include
+$ sudo cp -drf stage/lib/* /usr/lib64
+
+# 5. Install mysql-connector-c++
+$ wget https://dev.mysql.com/get/Downloads/Connector-C++/mysql-connector-c++-1.1.9-linux-el7-x86-64bit.tar.gz
+$ tar -xzvf mysql-connector-c++-1.1.9-linux-el7-x86-64bit.tar.gz
+$ sudo cp -drf mysql-connector-c++-1.1.9-linux-el7-x86-64bit/lib/* /usr/lib64
 ```
 
 Then, clone and make like this:  
